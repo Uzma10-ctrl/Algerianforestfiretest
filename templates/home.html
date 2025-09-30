@@ -5,7 +5,7 @@
 
             <!--main input for recieving query to our ML-->
             <form action="{{ url_for('predict_datapoint')}}" method="post" >
-                <input type="text" name="Temperature" placeholder="RH" required="required" /><br>
+                <input type="text" name="Temperature" placeholder="temperature" required="required" /><br>
                 <input type="text" name="RH" placeholder="RH" required="required" /><br>
                 <input type="text" name="Ws" placeholder="Ws" required="required" /><br>
                 <input type="text" name="Rain" placeholder="Rain" required="required" /><br>
