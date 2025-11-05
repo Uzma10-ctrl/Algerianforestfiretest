@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fire Risk Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: {{ color }};
+        }
+        .score {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="result">{{ result }}</div>
+    <div class="score">Risk Score: {{ score|round(2) }}</div>
+    <a href="/">Back to Sliders</a>
+</body>
+</html>

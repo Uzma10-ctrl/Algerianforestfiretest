@@ -1,24 +1,69 @@
-<html>
-    <body>
-        <div class="'login">
-            <h1>FWI PREDICTION</h1>
-
-            <!--main input for recieving query to our ML-->
-            <form action="{{ url_for('predict_datapoint')}}" method="post" >
-                <input type="text" name="Temperature" placeholder="temperature" required="required" /><br>
-                <input type="text" name="RH" placeholder="RH" required="required" /><br>
-                <input type="text" name="Ws" placeholder="Ws" required="required" /><br>
-                <input type="text" name="Rain" placeholder="Rain" required="required" /><br>
-                <input type="text" name="FFMC" placeholder="FFMC" required="required" /><br>
-                <input type="text" name="DMC" placeholder="DMC" required="required" /><br>
-                <input type="text" name="ISI" placeholder="ISI" required="required" /><br>
-                <input type="text" name="Classes" placeholder="Classes" required="required" /><br>
-                <input type="text" name="Region" placeholder="Region" required="required" /><br>
-
-                <button type="'submit" class=""btn.btn-primary.btn-block.btn-large">predict</button>
-            </form>
-        <h2>
-            THE FWI PREDICTION IS {{results}}
-        </h2>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fire Risk Prediction Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #FFEFBA, #FFFFFF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .result-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 {
+            color: #d32f2f;
+            margin-bottom: 30px;
+        }
+        .result {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .low { color: green; }
+        .medium { color: orange; }
+        .high { color: red; }
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #d32f2f;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .back-button:hover { background-color: #b71c1c; }
+    </style>
+</head>
+<body>
+<div class="result-card">
+    <h1>Prediction Result</h1>
+    <div class="result">
+        {% set value = results | round(2) %}
+        {% if value < 3 %}
+            <span class="low">Fire Risk: {{ value }} (Low)</span>
+        {% elif value < 6 %}
+            <span class="medium">Fire Risk: {{ value }} (Medium)</span>
+        {% else %}
+            <span class="high">Fire Risk: {{ value }} (High)</span>
+        {% endif %}
+    </div>
+    <a class="back-button" href="/">Back to Form</a>
+</div>
+</body>
 </html>

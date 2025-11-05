@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fire Risk Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type=range] {
+            width: 100%;
+        }
+        output {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Algerian Forest Fire Risk Prediction</h1>
+
+    <form action="/predict" method="post">
+
+        <div class="slider-container">
+            <label>Temperature (°C):</label>
+            <input type="range" name="temperature" min="0" max="50" step="0.1" value="25" oninput="this.nextElementSibling.value = this.value">
+            <output>25</output>
+        </div>
+
+        <div class="slider-container">
+            <label>Relative Humidity (RH %):</label>
+            <input type="range" name="rh" min="0" max="100" step="0.1" value="50" oninput="this.nextElementSibling.value = this.value">
+            <output>50</output>
+        </div>
+
+        <div class="slider-container">
+            <label>Wind Speed (Ws m/s):</label>
+            <input type="range" name="ws" min="0" max="20" step="0.1" value="5" oninput="this.nextElementSibling.value = this.value">
+            <output>5</output>
+        </div>
+
+        <div class="slider-container">
+            <label>Rain (mm/m²):</label>
+            <input type="range" name="rain" min="0" max="50" step="0.1" value="0" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+        </div>
+
+        <div class="slider-container">
+            <label>FFMC:</label>
+            <input type="range" name="ffmc" min="0" max="100" step="0.1" value="85" oninput="this.nextElementSibling.value = this.value">
+            <output>85</output>
+        </div>
+
+        <div class="slider-container">
+            <label>DMC:</label>
+            <input type="range" name="dmc" min="0" max="500" step="0.1" value="150" oninput="this.nextElementSibling.value = this.value">
+            <output>150</output>
+        </div>
+
+        <div class="slider-container">
+            <label>ISI:</label>
+            <input type="range" name="isi" min="0" max="50" step="0.1" value="10" oninput="this.nextElementSibling.value = this.value">
+            <output>10</output>
+        </div>
+
+        <div class="slider-container">
+            <label>Classes:</label>
+            <input type="range" name="classes" min="1" max="5" step="1" value="3" oninput="this.nextElementSibling.value = this.value">
+            <output>3</output>
+        </div>
+
+        <div class="slider-container">
+            <label>Region:</label>
+            <input type="range" name="region" min="1" max="3" step="1" value="1" oninput="this.nextElementSibling.value = this.value">
+            <output>1</output>
+        </div>
+
+        <button type="submit">Predict Fire Risk</button>
+    </form>
+</body>
+</html>
