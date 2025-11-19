@@ -1,15 +1,79 @@
-.env
-# environment variables
-.env
-*.env
-
-# python cache
+# ==========================
+#  Python
+# ==========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
 
-# model files
+# ==========================
+#  OS / Editor Files
+# ==========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ==========================
+#  Environment & Secrets
+# ==========================
+*.env
+*.env.*
+.env.local
+secret.key
+*.pem
+*.key
+*.crt
+
+# Twilio tokens / credentials
+twilio_config.json
+
+# ==========================
+#  Logs / Cache
+# ==========================
+*.log
+logs/
+*.sqlite3
+*.db
+instance/
+
+# ==========================
+#  Flask
+# ==========================
+__pycache__/
+*.pyc
+*.pyo
+instance/
+*.pid
+
+# ==========================
+#  Machine Learning Models
+# ==========================
 models/
 *.pkl
+*.joblib
+*.h5
+*.model
 
-# Jupyter notebook checkpoints
+# ==========================
+#  Temporary Files
+# ==========================
+*.tmp
+*.bak
+*.swp
+
+# ==========================
+#  Virtual Environment (Windows)
+# ==========================
+Scripts/
+Lib/
+Include/
+
+# ==========================
+#  Jupyter Notebooks
+# ==========================
 .ipynb_checkpoints/
