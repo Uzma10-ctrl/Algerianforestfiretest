@@ -1,35 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fire Risk Result</title>
+
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: #f5f5f5;
             text-align: center;
-            padding: 50px;
+            padding: 20px;
         }
-        .result {
-            font-size: 24px;
+
+        .box {
+            background: white;
+            width: 60%;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+        }
+
+        #map {
+            height: 350px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 12px;
+            border: 2px solid #ccc;
+        }
+
+        .high {
+            color: red;
+            font-size: 30px;
             font-weight: bold;
-            color: {{ color }};
         }
-        .score {
-            font-size: 20px;
-            margin-top: 10px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
+
+        .low {
+            color: green;
+            font-size: 30px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="result">{{ result }}</div>
-    <div class="score">Risk Score: {{ score|round(2) }}</div>
-    <a href="/">Back to Sliders</a>
+
+<div class="box">
+    <h1>🔥 Fire Risk Prediction</h1>
+
+    <!-- FIXED JINJA SYNTAX -->
+    <h2 class="{{ 'high' if color == 'red' else 'low' }}">
+        {{ result }}
+    </h2>
+
+    <p><strong>Risk Score:</strong> {{ score }}</p>
+
+    <!-- MAP CONTAINER -->
+    <div id="map"></div>
+</div>
+
+<!-- Audio element -->
+<audio id="alertSound" src="{{ url_for('static', filename='alert.mp3') }}"></audio>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<script>
+    // 1️⃣ SOUND LOGIC: Only on High Risk
+    const riskColor = "{{ color }}";
+    const sound = document.getElementById("alertSound");
+
+    if (riskColor === "red") {
+        sound.play();
+    }
+
+    // 2️⃣ MAP LOGIC
+    var map = L.map('map').setView([28.0339, 1.6596], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    }).addTo(map);
+
+    L.marker([28.0339, 1.6596])
+        .addTo(map)
+        .bindPopup("Algeria - Fire Risk Area")
+        .openPopup();
+</script>
+
 </body>
 </html>

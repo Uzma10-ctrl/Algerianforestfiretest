@@ -1,105 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Fire Risk Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .slider-container {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type=range] {
-            width: 100%;
-        }
-        output {
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: block;
-            margin: auto;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algerian Forest Fire Risk Prediction</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+      color: #333;
+      max-width: 750px;
+      margin: 50px auto;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1e88e5;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .slider-container {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: #1e88e5;
+    }
+
+    output {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    input[type=text] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+
+    #loading {
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      color: #1565c0;
+    }
+  </style>
+
+  <script>
+    function showLoading() {
+      document.getElementById('loading').style.display = 'block';
+    }
+  </script>
 </head>
+
 <body>
-    <h1>Algerian Forest Fire Risk Prediction</h1>
+  <h1>🔥 Algerian Forest Fire Risk Prediction 🔥</h1>
 
-    <form action="/predict" method="post">
+  <form action="/predict" method="post" onsubmit="showLoading()">
 
-        <div class="slider-container">
-            <label>Temperature (°C):</label>
-            <input type="range" name="temperature" min="0" max="50" step="0.1" value="25" oninput="this.nextElementSibling.value = this.value">
-            <output>25</output>
-        </div>
+    <div class="slider-container">
+      <label>Temperature (°C): <output id="temp_out">25</output></label>
+      <input type="range" name="temperature" min="0" max="50" step="0.1" value="25"
+             oninput="temp_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>Relative Humidity (RH %):</label>
-            <input type="range" name="rh" min="0" max="100" step="0.1" value="50" oninput="this.nextElementSibling.value = this.value">
-            <output>50</output>
-        </div>
+    <div class="slider-container">
+      <label>Relative Humidity (%): <output id="rh_out">50</output></label>
+      <input type="range" name="rh" min="0" max="100" step="0.1" value="50"
+             oninput="rh_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>Wind Speed (Ws m/s):</label>
-            <input type="range" name="ws" min="0" max="20" step="0.1" value="5" oninput="this.nextElementSibling.value = this.value">
-            <output>5</output>
-        </div>
+    <div class="slider-container">
+      <label>Wind Speed (m/s): <output id="ws_out">5</output></label>
+      <input type="range" name="ws" min="0" max="20" step="0.1" value="5"
+             oninput="ws_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>Rain (mm/m²):</label>
-            <input type="range" name="rain" min="0" max="50" step="0.1" value="0" oninput="this.nextElementSibling.value = this.value">
-            <output>0</output>
-        </div>
+    <div class="slider-container">
+      <label>Rain (mm/m²): <output id="rain_out">0</output></label>
+      <input type="range" name="rain" min="0" max="50" step="0.1" value="0"
+             oninput="rain_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>FFMC:</label>
-            <input type="range" name="ffmc" min="0" max="100" step="0.1" value="85" oninput="this.nextElementSibling.value = this.value">
-            <output>85</output>
-        </div>
+    <div class="slider-container">
+      <label>FFMC: <output id="ffmc_out">85</output></label>
+      <input type="range" name="ffmc" min="0" max="100" step="0.1" value="85"
+             oninput="ffmc_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>DMC:</label>
-            <input type="range" name="dmc" min="0" max="500" step="0.1" value="150" oninput="this.nextElementSibling.value = this.value">
-            <output>150</output>
-        </div>
+    <div class="slider-container">
+      <label>DMC: <output id="dmc_out">150</output></label>
+      <input type="range" name="dmc" min="0" max="500" step="0.1" value="150"
+             oninput="dmc_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>ISI:</label>
-            <input type="range" name="isi" min="0" max="50" step="0.1" value="10" oninput="this.nextElementSibling.value = this.value">
-            <output>10</output>
-        </div>
+    <div class="slider-container">
+      <label>ISI: <output id="isi_out">10</output></label>
+      <input type="range" name="isi" min="0" max="50" step="0.1" value="10"
+             oninput="isi_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>Classes:</label>
-            <input type="range" name="classes" min="1" max="5" step="1" value="3" oninput="this.nextElementSibling.value = this.value">
-            <output>3</output>
-        </div>
+    <div class="slider-container">
+      <label>Classes: <output id="cls_out">3</output></label>
+      <input type="range" name="classes" min="1" max="5" step="1" value="3"
+             oninput="cls_out.value=this.value">
+    </div>
 
-        <div class="slider-container">
-            <label>Region:</label>
-            <input type="range" name="region" min="1" max="3" step="1" value="1" oninput="this.nextElementSibling.value = this.value">
-            <output>1</output>
-        </div>
+    <div class="slider-container">
+      <label>Region (Wilaya):</label>
+      <select name="region" required>
+        <option value="1">Algiers</option>
+        <option value="2">Tizi Ouzou</option>
+        <option value="3">Bejaia</option>
+        <option value="4">Bouira</option>
+        <option value="5">Skikda</option>
+        <option value="6">Annaba</option>
+        <option value="7">Blida</option>
+        <option value="8">Constantine</option>
+        <option value="9">Tlemcen</option>
+        <option value="10">Setif</option>
+        <option value="11">Oran</option>
+        <option value="12">Batna</option>
+       </select>
+    </div>
 
-        <button type="submit">Predict Fire Risk</button>
-    </form>
+
+    <div class="slider-container">
+      <label>📱 Phone Number (for SMS alerts):</label>
+      <input type="text" name="phone_number" placeholder="+91XXXXXXXXXX" required>
+    </div>
+
+    <button type="submit">🚀 Predict Fire Risk</button>
+
+    <div id="loading">⏳ Predicting fire risk... please wait...</div>
+  </form>
 </body>
 </html>
